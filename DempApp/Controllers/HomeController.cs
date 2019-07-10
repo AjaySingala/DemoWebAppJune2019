@@ -5,13 +5,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DempApp.Models;
+using Microsoft.Extensions.Options;
 
 namespace DempApp.Controllers
 {
     public class HomeController : Controller
     {
+        private AppSettings _appSettings;
+
+        public HomeController(IOptions<AppSettings> settings)
+        {
+            _appSettings = settings.Value;
+        }
+
         public IActionResult Index()
         {
+            ViewData["conn"] = _appSettings.conn;
             return View();
         }
 
